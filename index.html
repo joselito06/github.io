@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BibliApp</title>
+<style>
+  :root { --bg:#FFF8F6; --ink:#231917; --accent:#8F4C38; --card:#FFDBD1; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#1A1110; --ink:#F1DFDA; --card:#3B2A26; } }
+  body { margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--ink);
+         min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .card { max-width:420px; width:100%; background:var(--card); border-radius:24px; padding:32px 24px; text-align:center; }
+  h1 { font-family:Georgia,serif; font-size:1.5rem; margin:0 0 4px; }
+  .ref { font-size:1.15rem; font-weight:600; color:var(--accent); margin:12px 0 20px; }
+  a.btn { display:block; background:var(--accent); color:#fff; text-decoration:none;
+          border-radius:999px; padding:14px 20px; font-weight:600; margin-top:10px; }
+  p { line-height:1.5; }
+  small { opacity:.7; display:block; margin-top:16px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📖 BibliApp</h1>
+  <p>Tu Biblia gratis, sin conexión y con lectura en voz alta.</p>
+  <div class="ref" id="ref"></div>
+  <a class="btn" id="open" href="https://play.google.com/store/apps/details?id=com.jbncode.bibliaapp">Descargar BibliApp</a>
+  <small>¿Ya tienes la app? Toca de nuevo el enlace que te enviaron y se abrirá directamente en el versículo.</small>
+</div>
+<script>
+  // Ruta esperada: /v/{versión}/{libro}/{capítulo}/{versículo}
+  try {
+    var p = location.pathname.split('/').filter(Boolean);
+    if (p[0] === 'v' && p.length >= 4) {
+      var books = {"Gen":"Génesis","Exo":"Éxodo","Lev":"Levítico","Num":"Números","Deu":"Deuteronomio",
+        "Jos":"Josué","Jdg":"Jueces","Rut":"Rut","1Sa":"1 Samuel","2Sa":"2 Samuel","1Ki":"1 Reyes","2Ki":"2 Reyes",
+        "1Ch":"1 Crónicas","2Ch":"2 Crónicas","Ezr":"Esdras","Neh":"Nehemías","Est":"Ester","Job":"Job",
+        "Psa":"Salmos","Pro":"Proverbios","Ecc":"Eclesiastés","Sol":"Cantares","Isa":"Isaías","Jer":"Jeremías",
+        "Lam":"Lamentaciones","Eze":"Ezequiel","Dan":"Daniel","Hos":"Oseas","Joe":"Joel","Amo":"Amós",
+        "Oba":"Abdías","Jon":"Jonás","Mic":"Miqueas","Nah":"Nahúm","Hab":"Habacuc","Zep":"Sofonías",
+        "Hag":"Hageo","Zec":"Zacarías","Mal":"Malaquías","Mat":"Mateo","Mar":"Marcos","Luk":"Lucas",
+        "Joh":"Juan","Act":"Hechos","Rom":"Romanos","1Co":"1 Corintios","2Co":"2 Corintios","Gal":"Gálatas",
+        "Eph":"Efesios","Phi":"Filipenses","Col":"Colosenses","1Th":"1 Tesalonicenses","2Th":"2 Tesalonicenses",
+        "1Ti":"1 Timoteo","2Ti":"2 Timoteo","Tit":"Tito","Phm":"Filemón","Heb":"Hebreos","Jam":"Santiago",
+        "1Pe":"1 Pedro","2Pe":"2 Pedro","1Jo":"1 Juan","2Jo":"2 Juan","3Jo":"3 Juan","Jud":"Judas","Rev":"Apocalipsis"};
+      var book = books[p[2]] || p[2];
+      document.getElementById('ref').textContent =
+        book + ' ' + p[3] + (p[4] ? ':' + p[4] : '') + ' · ' + p[1].toUpperCase();
+    }
+  } catch (e) { }
+</script>
+</body>
+</html>
